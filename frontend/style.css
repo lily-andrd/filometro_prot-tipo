@@ -1,0 +1,687 @@
+:root {
+    --verde-hospital: #008C45;      /* Verde da cruz enviada */
+    --verde-claro-bg: #E8F7EE;      /* Verde claro suave para destaque */
+    --verde-menta: #C6EED6;         /* Bordas e hover suave */
+    --verde-escuro: #005C2D;        /* Textos de destaque e contraste */
+    --branco: #FFFFFF;
+    --fundo-geral: #F6FBF8;
+    --texto-principal: #1A2B23;
+    --texto-secundario: #475B51;
+    
+    /* Semáforo de lotação */
+    --lotacao-baixa: #008C45;
+    --lotacao-moderada: #B45309;
+    --lotacao-alta: #B91C1C;
+}
+
+/* Modo Alto Contraste para baixa visão */
+body.alto-contraste {
+    --verde-hospital: #005A2B;
+    --verde-claro-bg: #FFFFFF;
+    --verde-menta: #000000;
+    --verde-escuro: #000000;
+    --branco: #FFFFFF;
+    --fundo-geral: #FFFFFF;
+    --texto-principal: #000000;
+    --texto-secundario: #000000;
+}
+
+html {
+    font-size: 16px; /* Base alterada dinamicamente pelos botões A+ / A- */
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--fundo-geral);
+    color: var(--texto-principal);
+    line-height: 1.6;
+}
+
+.container {
+    width: 92%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+/* Barra de Acessibilidade */
+.barra-acessibilidade {
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.acessibilidade-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.acessibilidade-botoes {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.acessibilidade-botoes button {
+    background-color: var(--branco);
+    color: var(--verde-escuro);
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.acessibilidade-botoes button:hover {
+    background-color: var(--verde-menta);
+}
+
+/* Cabeçalho Branco com Detalhes em Verde */
+.navbar {
+    background-color: var(--branco);
+    border-bottom: 3px solid var(--verde-hospital);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0, 140, 69, 0.08);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-box {
+    width: 54px;
+    height: 54px;
+    background-color: var(--branco);
+    border: 2px solid var(--verde-menta);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+.logo-box img, .cruz-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo-area h1 {
+    font-size: 1.75rem;
+    color: var(--verde-hospital);
+    line-height: 1.1;
+}
+
+.logo-area p {
+    font-size: 0.95rem;
+    color: var(--texto-secundario);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--verde-escuro);
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.nav-links a:hover {
+    background-color: var(--verde-claro-bg);
+}
+
+/* Hero Section Verde Claro e Branco */
+.hero {
+    background: linear-gradient(135deg, var(--verde-claro-bg) 0%, var(--branco) 100%);
+    border-bottom: 1px solid var(--verde-menta);
+    padding: 2.5rem 0;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.tag-destaque {
+    display: inline-block;
+    background-color: var(--branco);
+    color: var(--verde-hospital);
+    border: 1px solid var(--verde-hospital);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+.hero-texto h2 {
+    font-size: 2rem;
+    color: var(--verde-escuro);
+    line-height: 1.25;
+    margin-bottom: 0.8rem;
+}
+
+.hero-texto p {
+    font-size: 1.1rem;
+    color: var(--texto-secundario);
+    margin-bottom: 1.5rem;
+}
+
+.hero-acoes {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-primario, .btn-secundario {
+    padding: 0.9rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.05rem;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-primario {
+    background-color: var(--verde-hospital);
+    color: var(--branco);
+    border: 2px solid var(--verde-hospital);
+}
+
+.btn-primario:hover {
+    background-color: var(--verde-escuro);
+}
+
+.btn-secundario {
+    background-color: var(--branco);
+    color: var(--verde-hospital);
+    border: 2px solid var(--verde-hospital);
+}
+
+.btn-secundario:hover {
+    background-color: var(--verde-claro-bg);
+}
+
+.resumo-card {
+    background-color: var(--branco);
+    border: 2px solid var(--verde-hospital);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 140, 69, 0.1);
+}
+
+.resumo-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+    margin-bottom: 0.4rem;
+}
+
+.resumo-card strong {
+    display: block;
+    font-size: 1.35rem;
+    color: var(--verde-hospital);
+    margin-bottom: 0.4rem;
+}
+
+.resumo-tempo {
+    display: inline-block;
+    background-color: var(--verde-claro-bg);
+    color: var(--verde-escuro);
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+/* Seções Gerais */
+.bloco-secao {
+    padding: 3rem 0;
+}
+
+.titulo-secao {
+    margin-bottom: 1.8rem;
+}
+
+.titulo-secao h2 {
+    font-size: 1.75rem;
+    color: var(--verde-escuro);
+}
+
+.titulo-secao p {
+    color: var(--texto-secundario);
+    font-size: 1.05rem;
+}
+
+/* Filtros Acessíveis */
+.filtros {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.2rem;
+    background-color: var(--branco);
+    padding: 1.2rem;
+    border-radius: 14px;
+    border: 1px solid var(--verde-menta);
+    margin-bottom: 2rem;
+}
+
+.campo-busca label, .campo-select label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--verde-escuro);
+}
+
+.filtros input, .filtros select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1.05rem;
+    border: 2px solid var(--verde-menta);
+    border-radius: 10px;
+    background-color: var(--fundo-geral);
+    color: var(--texto-principal);
+}
+
+.filtros input:focus, .filtros select:focus {
+    outline: none;
+    border-color: var(--verde-hospital);
+    background-color: var(--branco);
+}
+
+/* Cards de Unidades */
+.grid-unidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 1.5rem;
+}
+
+.card-unidade {
+    background-color: var(--branco);
+    border: 2px solid var(--verde-menta);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.card-topo h3 {
+    font-size: 1.25rem;
+    color: var(--verde-escuro);
+}
+
+.badge-status {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.badge-status.baixo { background-color: var(--verde-claro-bg); color: var(--lotacao-baixa); }
+.badge-status.moderado { background-color: #FEF3C7; color: var(--lotacao-moderada); }
+.badge-status.alto { background-color: #FEE2E2; color: var(--lotacao-alta); }
+
+.info-local-horario {
+    font-size: 0.95rem;
+    color: var(--texto-secundario);
+    margin-bottom: 1rem;
+}
+
+.info-local-horario p {
+    margin-bottom: 0.35rem;
+}
+
+.painel-numeros {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    background-color: var(--verde-claro-bg);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.numero-item span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--texto-secundario);
+}
+
+.numero-item strong {
+    font-size: 1.35rem;
+    color: var(--texto-principal);
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 12px;
+    background-color: #E2E8F0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+}
+
+.barra-valor {
+    height: 100%;
+    background-color: var(--lotacao-baixa);
+    transition: width 0.4s ease;
+}
+
+.moderado .barra-valor { background-color: var(--lotacao-moderada); }
+.alto .barra-valor { background-color: var(--lotacao-alta); }
+
+.card-botoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.btn-card {
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid var(--verde-hospital);
+    text-decoration: none;
+}
+
+.btn-mapa {
+    background-color: var(--branco);
+    color: var(--verde-hospital);
+}
+
+.btn-mapa:hover {
+    background-color: var(--verde-claro-bg);
+}
+
+.btn-ir {
+    background-color: var(--verde-hospital);
+    color: var(--branco);
+}
+
+.btn-ir:hover {
+    background-color: var(--verde-escuro);
+}
+
+/* Seção Câmera OpenCV ao Vivo */
+.painel-camera {
+    background-color: var(--branco);
+    border: 2px solid var(--verde-menta);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.badge-ia {
+    display: inline-block;
+    background-color: var(--verde-claro-bg);
+    color: var(--verde-hospital);
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.5rem;
+}
+
+.camera-visor {
+    background-color: #111827;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 1rem;
+    color: var(--branco);
+}
+
+.camera-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.indicador-gravando {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.ponto-vermelho {
+    width: 10px;
+    height: 10px;
+    background-color: #EF4444;
+    border-radius: 50%;
+    animation: piscar 1.2s infinite;
+}
+
+@keyframes piscar {
+    50% { opacity: 0.2; }
+}
+
+.status-cam {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+}
+
+.tela-video {
+    width: 100%;
+    background-color: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--verde-hospital);
+}
+
+.tela-video canvas, .tela-video img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.controles-demo {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.controles-demo button {
+    flex: 1;
+    padding: 0.65rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-demo-entrada { background-color: var(--verde-hospital); color: var(--branco); }
+.btn-demo-saida { background-color: #E5E7EB; color: #111827; }
+.btn-demo-api { background-color: #0284C7; color: var(--branco); }
+
+.camera-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.kpi-box {
+    background-color: var(--verde-claro-bg);
+    border: 1px solid var(--verde-menta);
+    padding: 1.2rem;
+    border-radius: 12px;
+}
+
+.kpi-atual {
+    border: 2px solid var(--verde-hospital);
+}
+
+.kpi-box span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+.kpi-box strong {
+    font-size: 2.2rem;
+    color: var(--verde-escuro);
+    line-height: 1.2;
+}
+
+.kpi-duplo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.texto-verde { color: var(--verde-hospital) !important; }
+
+.aviso-privacidade {
+    background-color: var(--fundo-geral);
+    border-left: 4px solid var(--verde-hospital);
+    padding: 0.9rem;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+    border-radius: 0 8px 8px 0;
+}
+
+/* Grid Diferenciais */
+.grid-diferenciais {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.card-diferencial {
+    background-color: var(--branco);
+    border: 1px solid var(--verde-menta);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.icone-dif {
+    width: 42px;
+    height: 42px;
+    background-color: var(--verde-hospital);
+    color: var(--branco);
+    font-weight: 800;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.card-diferencial h3 {
+    color: var(--verde-escuro);
+    margin-bottom: 0.5rem;
+}
+
+/* Modal Mapa */
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 999;
+}
+
+.modal-conteudo {
+    background-color: var(--branco);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    padding: 1.5rem;
+    border: 3px solid var(--verde-hospital);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.btn-fechar {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.modal-subtexto { font-weight: 600; margin-bottom: 0.3rem; }
+.modal-horario { color: var(--verde-hospital); font-weight: 700; margin-bottom: 1rem; }
+.modal-footer { margin-top: 1rem; text-align: right; }
+
+footer {
+    background-color: var(--branco);
+    border-top: 2px solid var(--verde-menta);
+    padding: 1.5rem 0;
+    text-align: center;
+    color: var(--texto-secundario);
+    margin-top: 2rem;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 820px) {
+    .hero-content, .filtros, .camera-grid {
+        grid-template-columns: 1fr;
+    }
+}

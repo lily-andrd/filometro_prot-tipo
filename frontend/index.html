@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filômetro | Monitoramento Inteligente da Saúde Pública</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Barra Superior de Acessibilidade para Terceira Idade -->
+    <div class="barra-acessibilidade" role="region" aria-label="Opções de Acessibilidade">
+        <div class="container acessibilidade-content">
+            <span>Acessibilidade:</span>
+            <div class="acessibilidade-botoes">
+                <button type="button" id="btn-diminuir-fonte" aria-label="Diminuir tamanho do texto">A-</button>
+                <button type="button" id="btn-resetar-fonte" aria-label="Tamanho padrão do texto">A</button>
+                <button type="button" id="btn-aumentar-fonte" aria-label="Aumentar tamanho do texto">A+</button>
+                <button type="button" id="btn-contraste" aria-label="Alternar alto contraste">Alto Contraste</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho Principal Verde Claro e Branco -->
+    <header class="navbar">
+        <div class="container header-content">
+            <div class="logo-area">
+                <div class="logo-box">
+                    <img src="logo-cruz.png" alt="Logo Filômetro Saúde Pública" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <!-- Fallback SVG idêntico à cruz verde enviada -->
+                    <svg class="cruz-svg" viewBox="0 0 100 100" style="display:none;" aria-hidden="true">
+                        <rect x="35" y="10" width="30" height="80" fill="#008C45"/>
+                        <rect x="10" y="35" width="80" height="30" fill="#008C45"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Filômetro</h1>
+                    <p>Lotação das Unidades de Saúde em Tempo Real</p>
+                </div>
+            </div>
+
+            <nav class="nav-links" aria-label="Menu principal">
+                <a href="#secao-unidades">Unidades</a>
+                <a href="#secao-camera">Câmera ao Vivo (IA)</a>
+                <a href="#secao-diferenciais">Como Funciona</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner de Boas-vindas com linguagem simples e direta -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-texto">
+                <span class="tag-destaque">Atendimento Humanizado e Sem Filas</span>
+                <h2>Veja qual posto de saúde está mais vazio antes de sair de casa.</h2>
+                <p>Informação automática e gratuita para você ser atendido mais rápido, sem precisar instalar nada ou ter internet na fila.</p>
+                <div class="hero-acoes">
+                    <a href="#secao-unidades" class="btn-primario">Ver Unidades Agora</a>
+                    <a href="#secao-camera" class="btn-secundario">Ver Contagem por Câmera</a>
+                </div>
+            </div>
+            <div class="hero-resumo-rapido">
+                <div class="resumo-card">
+                    <span class="resumo-label">Unidade mais tranquila agora:</span>
+                    <strong id="destaque-melhor-unidade">UBS Jardim das Oliveiras</strong>
+                    <span class="resumo-tempo" id="destaque-melhor-tempo">Espera estimada: ~15 min</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- SEÇÃO 1: LISTA DE UNIDADES COM HORÁRIOS E LOCALIZAÇÃO -->
+        <section id="secao-unidades" class="bloco-secao">
+            <div class="titulo-secao">
+                <h2>Unidades de Saúde Próximas</h2>
+                <p>Atualizado automaticamente a cada 5 segundos via Visão Computacional</p>
+            </div>
+
+            <!-- Filtros Grandes e Fáceis de Usar -->
+            <div class="filtros">
+                <div class="campo-busca">
+                    <label for="busca-unidade">Pesquisar posto ou bairro:</label>
+                    <input type="text" id="busca-unidade" placeholder="Digite o nome da UBS, UPA ou bairro...">
+                </div>
+                <div class="campo-select">
+                    <label for="filtro-status">Filtrar por lotação:</label>
+                    <select id="filtro-status">
+                        <option value="todos">Mostrar todas as unidades</option>
+                        <option value="baixo">Apenas unidades tranquilas (Recomendado)</option>
+                        <option value="moderado">Movimento moderado</option>
+                        <option value="alto">Unidades muito cheias</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid onde o JavaScript insere os cards -->
+            <div id="lista-unidades" class="grid-unidades" aria-live="polite"></div>
+        </section>
+
+        <!-- SEÇÃO 2: MONITOR DE VISÃO COMPUTACIONAL (OPENCV AO VIVO) -->
+        <section id="secao-camera" class="bloco-secao painel-camera">
+            <div class="titulo-secao">
+                <h2>Monitoramento de Fluxo por Câmera em Tempo Real</h2>
+                <p>Demonstração da contagem autônoma de entrada e saída na recepção (Unidade Piloto: UBS Jardim das Oliveiras)</p>
+            </div>
+
+            <div class="camera-grid">
+                <!-- Tela do Vídeo / Stream da API Python -->
+                <div class="camera-visor">
+                    <div class="camera-topo">
+                        <span class="indicador-gravando"><span class="ponto-vermelho"></span> CAM 01 - RECEPÇÃO PRINCIPAL</span>
+                        <span id="status-conexao-cam" class="status-cam">Modo Demonstração Interativa</span>
+                    </div>
+                    
+                    <!-- Quando a API Flask/FastAPI enviar o stream MJPEG, basta apontar o src para http://127.0.0.1:5000/video_feed -->
+                    <div class="tela-video" id="tela-video">
+                        <img id="stream-opencv" src="" alt="Transmissão da câmera com detecção OpenCV" style="display:none;">
+                        <canvas id="canvas-simulacao" width="640" height="360"></canvas>
+                    </div>
+
+                    <div class="controles-demo">
+                        <button type="button" id="btn-simular-entrada" class="btn-demo-entrada">+ Simular Entrada de Paciente</button>
+                        <button type="button" id="btn-simular-saida" class="btn-demo-saida">- Simular Saída de Paciente</button>
+                        <button type="button" id="btn-conectar-api" class="btn-demo-api">Conectar Câmera Real (Python)</button>
+                    </div>
+                </div>
+
+                <!-- Painel de Métricas da Câmera -->
+                <div class="camera-dados">
+                    <h3>Contagem Automática</h3>
+                    <div class="kpi-box kpi-atual">
+                        <span>Pessoas na Recepção Agora</span>
+                        <strong id="cam-pessoas-atuais">12</strong>
+                        <small>Capacidade máxima: 50 pessoas</small>
+                    </div>
+
+                    <div class="kpi-duplo">
+                        <div class="kpi-box">
+                            <span>Entradas Hoje</span>
+                            <strong id="cam-entradas" class="texto-verde">48</strong>
+                        </div>
+                        <div class="kpi-box">
+                            <span>Saídas Hoje</span>
+                            <strong id="cam-saidas">36</strong>
+                        </div>
+                    </div>
+
+                    <div class="aviso-privacidade">
+                        <strong>Privacidade Garantida:</strong> O algoritmo identifica apenas o contorno e a passagem pela linha virtual, sem reconhecimento facial ou gravação de dados pessoais.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: DIFERENCIAIS DO PROJETO (PARA A BANCA E USUÁRIOS) -->
+        <section id="secao-diferenciais" class="bloco-secao">
+            <div class="titulo-secao">
+                <h2>Por que o Filômetro é diferente?</h2>
+                <p>Solução pensada para a realidade do Sistema Único de Saúde (SUS)</p>
+            </div>
+
+            <div class="grid-diferenciais">
+                <article class="card-diferencial">
+                    <div class="icone-dif">1</div>
+                    <h3>100% Autônomo via Visão Computacional</h3>
+                    <p>Diferente dos portais que dependem de funcionários atualizando planilhas manualmente, nossas câmeras com OpenCV contam entradas e saídas sozinhas em tempo real.</p>
+                </article>
+
+                <article class="card-diferencial">
+                    <div class="icone-dif">2</div>
+                    <h3>Inclusivo para Idosos e Sem Celular</h3>
+                    <p>Diferente do Google Maps, o paciente na fila não precisa ter smartphone, internet móvel ou GPS ligado para ser contabilizado. Todos são contados automaticamente.</p>
+                </article>
+
+                <article class="card-diferencial">
+                    <div class="icone-dif">3</div>
+                    <h3>Baixo Custo para o Poder Público</h3>
+                    <p>Utiliza scripts em Python e aproveita as câmeras de segurança já instaladas nas recepções das UBSs, dispensando totens caros ou catracas eletrônicas.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Mapa e Detalhes da Unidade -->
+    <div id="modal-mapa" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" style="display:none;">
+        <div class="modal-conteudo">
+            <div class="modal-header">
+                <h3 id="modal-titulo">Localização da Unidade</h3>
+                <button type="button" id="btn-fechar-modal" class="btn-fechar" aria-label="Fechar janela">Fechar X</button>
+            </div>
+            <p id="modal-endereco" class="modal-subtexto"></p>
+            <p id="modal-horario" class="modal-horario"></p>
+            <div class="mapa-frame">
+                <iframe id="iframe-mapa" width="100%" height="280" style="border:0; border-radius: 10px;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="modal-footer">
+                <a id="link-externo-maps" href="#" target="_blank" class="btn-primario">Abrir Rota no Google Maps / GPS</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p><strong>Filômetro</strong> — Projeto de Conclusão de Curso (TCC) | Técnico em Desenvolvimento de Sistemas - SENAI-SP</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
